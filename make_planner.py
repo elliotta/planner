@@ -17,8 +17,8 @@ WEEKEND_COLOR = '5eaf0c'
 WEEKLY_TEMPLATE = None
 DAILY_TEMPLATE  = None
 ALTERNATE_TEMPLATES = {}
-WEEKLY_TEMPLATE_FILE = '/Users/elliotta/Documents/Planner/weekly.svg'
-DAILY_TEMPLATE_FILE  = '/Users/elliotta/Documents/Planner/daily.svg'
+WEEKLY_TEMPLATE_FILE = 'weekly.svg'
+DAILY_TEMPLATE_FILE  = 'daily.svg'
 
 MERGER = None
 MERGER_PAGE_COUNT = -1 # It's ridiculous that I have to do this myself
@@ -86,7 +86,7 @@ def replace_fill_color(style_string, color_string):
 
 
 def edit_daily(date, outfile):
-    logging.debug('Editing day %s' % str(date.date()))
+    logging.debug('Editing day %s' % str(date))
     global DAILY_TEMPLATE
     if not DAILY_TEMPLATE:
         DAILY_TEMPLATE = xml.dom.minidom.parse(DAILY_TEMPLATE_FILE)
@@ -127,7 +127,7 @@ def edit_daily(date, outfile):
 
 
 def edit_weekly(date, outfile):
-    logging.debug('Editing week of %s' % str(date.date()))
+    logging.debug('Editing week of %s' % str(date))
     global WEEKLY_TEMPLATE
     if not WEEKLY_TEMPLATE:
         WEEKLY_TEMPLATE = xml.dom.minidom.parse(WEEKLY_TEMPLATE_FILE)
