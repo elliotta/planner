@@ -88,9 +88,14 @@ def replace_fill_color(style_string, color_string):
 def edit_daily(date, outfile):
     logging.debug('Editing day %s' % str(date))
     global DAILY_TEMPLATE
+    global ALTERNATE_TEMPLATES
     if not DAILY_TEMPLATE:
         DAILY_TEMPLATE = xml.dom.minidom.parse(DAILY_TEMPLATE_FILE)
-    collection = DAILY_TEMPLATE.documentElement
+    if date in ALTERNATE_TEMPLATES:
+        template = ALTERNATE_TEMPLATES[date]
+    else:
+        template = DAILY_TEMPLATE
+    collection = template.documentElement
     if date.strftime('%a').startswith('S'):
         color = WEEKEND_COLOR
     else:
@@ -122,7 +127,7 @@ def edit_daily(date, outfile):
             elif e.getAttribute('inkscape:label') == 'Year':
                 e.getElementsByTagName('tspan')[0].childNodes[0].data = str(date.year)
     with open(outfile, 'w') as f:
-        DAILY_TEMPLATE.writexml(f)
+        template.writexml(f)
     return date.strftime('%b %d')
 
 
