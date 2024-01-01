@@ -52,7 +52,8 @@ def make_alterate_dailies_dict(json_file):
 def svg2pdf(infile, outfile):
     logging.debug('Converting %s to %s' % (infile, outfile))
     if platform == 'darwin':
-        subprocess.run(['/Applications/Inkscape.app/Contents/MacOS/inkscape', '--export-filename='+outfile, infile])
+        path = '/Applications/Inkscape.app/Contents/MacOS/inkscape'
+        subprocess.run([path, '--export-filename='+outfile, infile])
     else:
         subprocess.run(['inkscape', '--export-filename='+outfile, infile])
 
@@ -63,7 +64,7 @@ def add_page_to_merger(page_to_add, bookmark_name=None, bookmark_parent=None):
     if not MERGER:
         MERGER = PdfFileMerger()
     with open(page_to_add, 'rb') as f:
-        MERGER.append(PdfFileReader(f))
+        MERGER.append(PdfFileReader(f), bookmark_name)
     MERGER_PAGE_COUNT += 1
     if bookmark_parent:
         return MERGER.add_outline_item(bookmark_name, parent=bookmark_parent, pagenum=MERGER_PAGE_COUNT)
